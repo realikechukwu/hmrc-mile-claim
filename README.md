@@ -4,7 +4,7 @@ Get back tax on the miles you drove to hospital placements.
 
 If you are an NHS doctor in training who drives from home to a different hospital every few months, HMRC lets you claim tax relief on those miles. Most people never do. This tool works out the claim for you from your own payslips and placement list. You use it by chatting with an AI assistant on your own computer.
 
-**Interactive guide with tick boxes:** open `docs/index.html` in your browser, or visit https://realikechukwu.github.io/hmrc-mile-claim/ if the page is switched on.
+**Interactive guide with tick boxes:** open `docs/index.html` in your browser, or visit https://realikechukwu.github.io/hmrc-mile-claim/.
 
 ## Is this for you?
 - You are on an NHS rotation, and each hospital placement is under 24 months.
