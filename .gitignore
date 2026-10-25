@@ -1,0 +1,13 @@
+# Never publish personal documents or results
+my-documents/*
+!my-documents/README.txt
+tax-claim/
+_raw/
+*.pdf
+*.xlsx
+config.yaml
+config.draft.yaml
+payslips*.csv
+mileage_log.csv
+.DS_Store
+__pycache__/

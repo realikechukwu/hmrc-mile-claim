@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HMRC Mile Claim Guide</title>
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,600..800&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one road down the page. Each step is a waypoint on the route; checkpoints are yellow road signs. */
+:root {
+  --bg: #F3F5F7;
+  --surface: #FFFFFF;
+  --ink: #15202B;
+  --muted: #4F5E6C;
+  --line: #D3DBE2;
+  --road: #0B4EA2;
+  --road-ink: #FFFFFF;
+  --road-soft: #E4EDF8;
+  --sign: #F5C400;
+  --sign-ink: #1B1500;
+  --sign-soft: #FFF5CC;
+  --ok: #17794A;
+  --ok-soft: #E1F2E8;
+  --font-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E151C; --surface: #16212B; --ink: #E7EDF3; --muted: #9DB0C1; --line: #2A3947;
+    --road: #7DB1FF; --road-ink: #06142B; --road-soft: #172A44; --sign: #F5C400; --sign-ink: #1B1500;
+    --sign-soft: #322C0E; --ok: #55C58C; --ok-soft: #123222; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E151C; --surface: #16212B; --ink: #E7EDF3; --muted: #9DB0C1; --line: #2A3947;
+  --road: #7DB1FF; --road-ink: #06142B; --road-soft: #172A44; --sign: #F5C400; --sign-ink: #1B1500;
+  --sign-soft: #322C0E; --ok: #55C58C; --ok-soft: #123222; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.55; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--surface); }
+.wrap { max-width: 880px; margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 56px; }
+h1, h2, h3 { font-family: var(--font-display); font-stretch: 80%; line-height: 1.1; margin: 0; text-wrap: balance; letter-spacing: 0.005em; }
+p { margin: 0; max-width: 65ch; }
+a { color: var(--road); }
+:focus-visible { outline: 3px solid var(--sign); outline-offset: 2px; }
+
+/* progress bar */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--surface); border-bottom: 1px solid var(--line); margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))) calc(-1 * max(16px, env(safe-area-inset-right, 0px))); padding: 10px max(16px, env(safe-area-inset-right, 0px)) 10px max(16px, env(safe-area-inset-left, 0px)); display: flex; gap: 14px; align-items: center; }
+.bar .label { font-size: 14px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.bar .label b { color: var(--ink); }
+.track { flex: 1; min-width: 40px; height: 10px; border-radius: 99px; background: var(--road-soft); overflow: hidden; }
+.fill { height: 100%; width: 0; background: var(--road); transition: width .3s; }
+@media (prefers-reduced-motion: reduce) { .fill { transition: none; } }
+.linkbtn { background: none; border: 0; color: var(--muted); font: inherit; font-size: 14px; text-decoration: underline; cursor: pointer; padding: 6px 2px; }
+
+/* hero */
+.hero { padding-block: 44px 28px; display: grid; gap: 18px; }
+.hero h1 { font-size: clamp(40px, 8vw, 68px); font-weight: 800; }
+.hero h1 span { color: var(--road); }
+.hero p.lead { font-size: 20px; color: var(--ink); }
+.cta { display: inline-block; align-self: start; background: var(--road); color: var(--road-ink); font-weight: 700; padding: 13px 22px; border-radius: 8px; text-decoration: none; }
+
+/* flow */
+.flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-block: 8px 36px; counter-reset: f; }
+.flow > div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; position: relative; min-width: 0; }
+.flow b { display: block; font-family: var(--font-display); font-stretch: 80%; font-size: 19px; margin-bottom: 4px; }
+.flow small { color: var(--muted); font-size: 14px; line-height: 1.4; display: block; }
+.flow > div:not(:last-child)::after { content: ""; position: absolute; right: -12px; top: 50%; width: 12px; height: 2px; background: var(--road); }
+@media (max-width: 720px) { .flow { grid-template-columns: 1fr; } .flow > div:not(:last-child)::after { right: auto; left: 50%; top: 100%; width: 2px; height: 12px; } }
+
+/* panels */
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-block-end: 28px; display: grid; gap: 14px; }
+.panel h2 { font-size: 28px; }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+@media (max-width: 720px) { .two { grid-template-columns: 1fr; } }
+
+/* ticks */
+.ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.ticks li { min-width: 0; }
+.ticks label { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 12px; align-items: start; padding: 8px 10px; border-radius: 8px; cursor: pointer; }
+.ticks label:hover { background: var(--road-soft); }
+.ticks input { appearance: none; -webkit-appearance: none; width: 26px; height: 26px; margin: 1px 0 0; border: 2px solid var(--muted); border-radius: 6px; background: var(--surface); display: grid; place-content: center; cursor: pointer; }
+.ticks input::after { content: ""; width: 12px; height: 7px; border-left: 3px solid var(--road-ink); border-bottom: 3px solid var(--road-ink); transform: rotate(-45deg) translate(1px, -1px); opacity: 0; }
+.ticks input:checked { background: var(--ok); border-color: var(--ok); }
+.ticks input:checked::after { opacity: 1; }
+.ticks input:checked + span { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line); }
+.ticks span small { display: block; color: var(--muted); font-size: 15px; text-decoration: none; }
+.verdict { padding: 10px 14px; border-radius: 8px; background: var(--sign-soft); font-size: 16px; }
+.verdict.good { background: var(--ok-soft); }
+
+/* route */
+.route { position: relative; display: grid; gap: 22px; margin-block: 8px 28px; }
+.route::before { content: ""; position: absolute; left: 21px; top: 10px; bottom: 10px; width: 6px; background: repeating-linear-gradient(to bottom, var(--road) 0 18px, transparent 18px 30px); border-radius: 3px; }
+.step { position: relative; padding-left: 64px; min-width: 0; }
+.pin { position: absolute; left: 0; top: 0; width: 48px; height: 48px; border-radius: 50%; background: var(--road); color: var(--road-ink); display: grid; place-content: center; font-family: var(--font-display); font-size: 24px; font-weight: 800; border: 4px solid var(--bg); }
+.step.done .pin { background: var(--ok); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: grid; gap: 12px; }
+.card header { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; justify-content: space-between; }
+.card h3 { font-size: 26px; }
+.meta { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.card h4 { margin: 4px 0 0; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.note { font-size: 15px; color: var(--muted); }
+.stop { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; align-items: start; background: var(--sign-soft); border: 1px solid var(--sign); border-radius: 10px; padding: 10px 12px; }
+.sign { width: 30px; height: 30px; background: var(--sign); transform: rotate(45deg); border-radius: 4px; margin: 4px; display: grid; place-content: center; }
+.sign::after { content: "!"; transform: rotate(-45deg); font-weight: 800; color: var(--sign-ink); font-family: var(--font-display); }
+.stop b { font-family: var(--font-display); font-stretch: 80%; font-size: 18px; }
+
+/* code and prompt */
+.prompt { position: relative; background: #0F1B26; color: #E7EDF3; border-radius: 10px; padding: 16px; }
+.prompt pre { margin: 0; white-space: pre-wrap; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.55; max-height: 280px; overflow: auto; }
+.copy { margin-top: 10px; background: var(--sign); color: var(--sign-ink); border: 0; border-radius: 8px; padding: 10px 16px; font: inherit; font-weight: 700; cursor: pointer; }
+code { font-family: var(--font-mono); font-size: .88em; background: var(--road-soft); padding: 1px 6px; border-radius: 4px; overflow-wrap: anywhere; }
+
+/* deadlines and estimator */
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+th { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+td.when { white-space: nowrap; }
+.pill { display: inline-block; padding: 2px 10px; border-radius: 99px; font-size: 14px; background: var(--road-soft); }
+.pill.soon { background: var(--sign); color: var(--sign-ink); font-weight: 700; }
+.pill.late { background: var(--line); color: var(--muted); }
+.est { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 720px) { .est { grid-template-columns: 1fr; } }
+.est label { display: grid; gap: 4px; font-size: 15px; color: var(--muted); }
+.est input, .est select { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; width: 100%; }
+.out { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 720px) { .out { grid-template-columns: 1fr; } }
+.out div { background: var(--road-soft); border-radius: 10px; padding: 12px 14px; }
+.out b { display: block; font-family: var(--font-display); font-stretch: 80%; font-size: 30px; font-variant-numeric: tabular-nums; }
+.out span { font-size: 14px; color: var(--muted); }
+footer { color: var(--muted); font-size: 15px; display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+</style>
+
+<div class="wrap">
+  <div class="bar" role="status">
+    <span class="label">Done <b id="count">0 of 0</b></span>
+    <div class="track" aria-hidden="true"><div class="fill" id="fill"></div></div>
+    <button class="linkbtn" id="reset" type="button">Clear ticks</button>
+  </div>
+
+  <section class="hero">
+    <h1>HMRC <span>Mile</span> Claim</h1>
+    <p class="lead">If you drive to a different hospital every few months as an NHS doctor in training, you can claim tax back on those miles. This guide takes you from a folder of payslips to a finished claim, one tick at a time.</p>
+    <a class="cta" href="#route">Start with step 1</a>
+  </section>
+
+  <div class="flow">
+    <div><b>Your documents</b><small>Payslips, placement list, addresses. They stay on your computer.</small></div>
+    <div><b>AI assistant + tool</b><small>Reads them and does the sums on your machine.</small></div>
+    <div><b>You check</b><small>It stops at five checkpoints and waits for you.</small></div>
+    <div><b>Claim pack</b><small>Summary, spreadsheet, emails to hospitals, checklist.</small></div>
+  </div>
+
+  <section class="panel" aria-labelledby="fit">
+    <h2 id="fit">Is this for you?</h2>
+    <ul class="ticks" id="fitlist">
+      <li><label><input type="checkbox" data-fit><span>I am on an NHS rotation and each hospital placement is under 24 months.</span></label></li>
+      <li><label><input type="checkbox" data-fit><span>I drive my own car from home to the hospital.</span></label></li>
+      <li><label><input type="checkbox" data-fit><span>My employer has never paid me mileage or "excess travel".</span></label></li>
+      <li><label><input type="checkbox" data-fit><span>I have my ESR payslips from April 2022 onwards.</span></label></li>
+      <li><label><input type="checkbox" data-fit><span>I use a Mac, and an AI app that can open a folder and run commands.</span></label></li>
+    </ul>
+    <p class="verdict" id="verdict">Tick what is true for you.</p>
+    <p class="note">These five ticks are only a quick check. They are not counted in your progress.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="est">
+    <h2 id="est">What could it be worth?</h2>
+    <p class="note">A rough guess before you start. Example numbers shown. Change them to yours.</p>
+    <div class="est">
+      <label for="e-miles">Return miles per working day<input id="e-miles" type="number" min="0" step="0.1" value="20"></label>
+      <label for="e-days">Days you drive per year<input id="e-days" type="number" min="0" step="1" value="180"></label>
+      <label for="e-rate">Your top tax rate<select id="e-rate"><option value="0.2">20%</option><option value="0.4" selected>40%</option><option value="0.45">45%</option></select></label>
+    </div>
+    <div class="out" aria-live="polite">
+      <div><b id="o-miles">0</b><span>miles a year</span></div>
+      <div><b id="o-claim">0</b><span>approved amount (45p a mile, 25p after 10,000)</span></div>
+      <div><b id="o-refund">0</b><span>tax back a year, roughly</span></div>
+    </div>
+  </section>
+
+  <div class="route" id="route">
+
+    <article class="step" data-step>
+      <div class="pin">1</div>
+      <div class="card">
+        <header><h3>Get set up</h3><span class="meta">about 15 minutes</span></header>
+        <ul class="ticks">
+          <li><label><input type="checkbox" data-k="s1a"><span>Download the project.<small>On <a href="https://github.com/realikechukwu/hmrc-mile-claim" target="_blank" rel="noopener">the GitHub page</a>, click the green Code button, then Download ZIP.</small></span></label></li>
+          <li><label><input type="checkbox" data-k="s1b"><span>Unzip it.<small>Double-click the ZIP file. You get a folder called hmrc-mile-claim-main.</small></span></label></li>
+          <li><label><input type="checkbox" data-k="s1c"><span>Install an AI app that can work with folders.<small>The Claude desktop app with Claude Code, or ChatGPT's Codex app. A normal chat window where you only upload files will not work.</small></span></label></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="step" data-step>
+      <div class="pin">2</div>
+      <div class="card">
+        <header><h3>Collect your documents</h3><span class="meta">about 1 hour</span></header>
+        <p class="note">Put everything in the <code>my-documents</code> folder inside the project. Nothing in that folder is ever published.</p>
+        <h4>Payslips</h4>
+        <ul class="ticks">
+          <li><label><input type="checkbox" data-k="s2a"><span>Save every payslip PDF from April 2022 onwards from ESR.<small>Put them in <code>my-documents/payslips</code>. Locum and bank payslips too. Duplicates are fine, they are removed.</small></span></label></li>
+        </ul>
+        <h4>Placements</h4>
+        <ul class="ticks">
+          <li><label><input type="checkbox" data-k="s2b"><span>Open the Placements page in TIS and save it as a PDF.<small>Print, then choose Save as PDF. Put it in <code>my-documents/placements</code> with "tis" in the file name.</small></span></label></li>
+          <li><label><input type="checkbox" data-k="s2c"><span>Optional: save your ESR assignment history as a PDF too.<small>Same folder. It confirms the dates.</small></span></label></li>
+          <li><label><input type="checkbox" data-k="s2d"><span>Write down any job that is not in TIS, for example a local fellow post.<small>You will tell the assistant later.</small></span></label></li>
+        </ul>
+        <h4>Where you lived</h4>
+        <ul class="ticks">
+          <li><label><input type="checkbox" data-k="s2e"><span>Make <code>my-documents/homes.csv</code> from <code>templates/homes.csv</code>.<small>One line per home: postcode, move-in date, move-out date. Leave the last date blank for where you live now.</small></span></label></li>
+        </ul>
+        <h4>Optional, makes the claim stronger</h4>
+        <ul class="ticks">
+          <li><label><input type="checkbox" data-k="s2f"><span>Rota exports, work schedules, and annual and study leave records.<small>You can ask each hospital for these later (step 6).</small></span></label></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="step" data-step>
+      <div class="pin">3</div>
+      <div class="card">
+        <header><h3>Start the assistant</h3><span class="meta">5 minutes</span></header>
+        <ul class="ticks">
+          <li><label><input type="checkbox" data-k="s3a"><span>Open the unzipped project folder in your AI app.</span></label></li>
+          <li><label><input type="checkbox" data-k="s3b"><span>Copy this message and paste it in as your first message.</span></label></li>
+        </ul>
+        <div class="prompt">
+          <pre id="prompt">You are helping me prepare an HMRC claim for the miles I drove to NHS hospital placements (mileage allowance relief).
+
+Use the tool in this folder. First read AGENTS.md and follow it exactly.
+My documents are in the my-documents folder.
+
+Rules:
+- Keep everything on my computer. Do not upload anything.
+- Never change or move my original files.
+- Stop and wait for me at every checkpoint.
+- Never invent data. If something is missing, tell me and ask.
+- Explain things in plain English. I am not technical.
+- This is a calculation aid, not tax advice.
+
+Start with step 0: give me a short plan, and check that python3 and pdftotext are installed. Ask before installing anything.</pre>
+          <button class="copy" id="copy" type="button">Copy message</button> <span class="note" id="copied" style="color:#E7EDF3"></span>
+        </div>
+        <ul class="ticks">
+          <li><label><input type="checkbox" data-k="s3c"><span>I read its plan and replied OK.</span></label></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="step" data-step>
+      <div class="pin">4</div>
+      <div class="card">
+        <header><h3>Answer at each checkpoint</h3><span class="meta">a few sessions</span></header>
+        <p class="note">The assistant stops and waits at each of these. Nothing moves on until you reply.</p>
+        <div class="stop"><div class="sign"></div><div><b>Checkpoint 1: conversion</b><ul class="ticks"><li><label><input type="checkbox" data-k="c1"><span>The number of payslips looks right and any missing months make sense.</span></label></li></ul></div></div>
+        <div class="stop"><div class="sign"></div><div><b>Checkpoint 2: payslip lines</b><ul class="ticks"><li><label><input type="checkbox" data-k="c2"><span>I told it what the odd pay lines are (tunnel fares, bank shifts, salary sacrifice) and confirmed no mileage was ever paid.</span></label></li></ul></div></div>
+        <div class="stop"><div class="sign"></div><div><b>Checkpoint 3: placements and risks</b><ul class="ticks"><li><label><input type="checkbox" data-k="c3"><span>Dates and hospital postcodes are right, and I understand each risk it flagged.<small>Look hardest at any hospital you returned to several times, and any job spent at one site.</small></span></label></li></ul></div></div>
+        <div class="stop"><div class="sign"></div><div><b>Checkpoint 4: distances</b><ul class="ticks"><li><label><input type="checkbox" data-k="c4"><span>I gave it Google Maps return miles for each home and hospital pair.<small>Driving directions, home postcode to hospital postcode, then double the one-way miles.</small></span></label></li></ul></div></div>
+        <div class="stop"><div class="sign"></div><div><b>Final checkpoint: summary</b><ul class="ticks"><li><label><input type="checkbox" data-k="c5"><span>I read summary.md and issues.md and know what is still missing.</span></label></li></ul></div></div>
+      </div>
+    </article>
+
+    <article class="step" data-step>
+      <div class="pin">5</div>
+      <div class="card">
+        <header><h3>Read your results</h3><span class="meta">30 minutes</span></header>
+        <p class="note">Everything is in <code>my-documents/tax-claim</code>.</p>
+        <ul class="ticks">
+          <li><label><input type="checkbox" data-k="s5a"><span><code>summary.md</code>: the answer for each tax year, with a cautious "lower case" next to the full one.</span></label></li>
+          <li><label><input type="checkbox" data-k="s5b"><span><code>claim_summary.xlsx</code>: open it in Excel. Change any figure and the totals update.</span></label></li>
+          <li><label><input type="checkbox" data-k="s5c"><span>I understand the days are estimates from working days and leave, not real shifts.</span></label></li>
+          <li><label><input type="checkbox" data-k="s5d"><span>I added any tolls and parking I paid that were not reimbursed.</span></label></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="step" data-step>
+      <div class="pin">6</div>
+      <div class="card">
+        <header><h3>Ask for proof</h3><span class="meta">10 minutes, then wait a month</span></header>
+        <ul class="ticks">
+          <li><label><input type="checkbox" data-k="s6a"><span>Fill the gaps in each email in <code>sar_emails</code>.<small>Your GMC number, date of birth, contact details, and the hospital's data protection email (on its website).</small></span></label></li>
+          <li><label><input type="checkbox" data-k="s6b"><span>Send them. Hospitals must reply within one month.<small>Rotas and leave records replace the estimates and make the claim stronger.</small></span></label></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="step" data-step>
+      <div class="pin">7</div>
+      <div class="card">
+        <header><h3>Call HMRC</h3><span class="meta">0300 200 3310</span></header>
+        <p class="note">Do this before you file. Write down the date, the adviser's name and any reference.</p>
+        <ul class="ticks">
+          <li><label><input type="checkbox" data-k="s7a"><span>Ask how to file the earlier tax years.<small>The online form (P87) or Self Assessment?</small></span></label></li>
+          <li><label><input type="checkbox" data-k="s7b"><span>Ask whether you must register for Self Assessment.</span></label></li>
+          <li><label><input type="checkbox" data-k="s7c"><span>Ask about any hospital you returned to repeatedly.<small>Does HMRC treat it as one permanent workplace?</small></span></label></li>
+          <li><label><input type="checkbox" data-k="s7d"><span>Mention any earlier expenses claims, such as uniform, washing or courses.</span></label></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="step" data-step>
+      <div class="pin">8</div>
+      <div class="card">
+        <header><h3>File the claims</h3><span class="meta">earliest deadline first</span></header>
+        <p class="note">You have 4 years after each tax year ends. The days left are counted from today.</p>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>Tax year</th><th>Last day to claim</th><th>Time left</th><th>Filed</th></tr></thead>
+            <tbody id="deadlines"></tbody>
+          </table>
+        </div>
+        <p class="note">The newest year can only be filed after 5 April, once the tax year has ended.</p>
+        <ul class="ticks">
+          <li><label><input type="checkbox" data-k="s8z"><span>I will keep payslips, the mileage log, placement printouts, replies from hospitals and HMRC reference numbers for 6 years.</span></label></li>
+        </ul>
+      </div>
+    </article>
+  </div>
+
+  <div class="two">
+    <section class="panel">
+      <h2>Your privacy</h2>
+      <p>The scripts in this project never send anything anywhere. They run on your computer.</p>
+      <p>The AI app you choose will read your documents to help you. Its own privacy terms apply, so check them first.</p>
+      <p>Your documents and results stay in <code>my-documents</code>, which git ignores, so they are never published by accident.</p>
+    </section>
+    <section class="panel">
+      <h2>What it cannot do</h2>
+      <p>It cannot tell you for certain that a hospital counts as a temporary workplace. It flags risks. Check with HMRC or an accountant.</p>
+      <p>It estimates days from working days and leave unless you give it rotas.</p>
+      <p>It reads ESR payslips only, and does not include Scottish tax bands.</p>
+    </section>
+  </div>
+
+  <footer>
+    <p>This is a calculation and evidence aid, not tax advice. You are responsible for what you file with HMRC.</p>
+    <p><a href="https://github.com/realikechukwu/hmrc-mile-claim" target="_blank" rel="noopener">Project and instructions on GitHub</a></p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var KEY = "hmrcmile:v1";
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { state = {}; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  var boxes = Array.prototype.slice.call(document.querySelectorAll("input[data-k]"));
+  function paint() {
+    var done = 0;
+    boxes.forEach(function (b) { if (b.checked) done++; });
+    document.getElementById("count").textContent = done + " of " + boxes.length;
+    document.getElementById("fill").style.width = (boxes.length ? done / boxes.length * 100 : 0) + "%";
+    Array.prototype.forEach.call(document.querySelectorAll("[data-step]"), function (s) {
+      var inner = s.querySelectorAll("input[data-k]");
+      var all = inner.length > 0 && Array.prototype.every.call(inner, function (i) { return i.checked; });
+      s.classList.toggle("done", all);
+    });
+  }
+  boxes.forEach(function (b) {
+    b.checked = !!state[b.getAttribute("data-k")];
+    b.addEventListener("change", function () { state[b.getAttribute("data-k")] = b.checked; save(); paint(); });
+  });
+  document.getElementById("reset").addEventListener("click", function () {
+    state = {}; save(); boxes.forEach(function (b) { b.checked = false; }); paint(); buildDeadlines();
+  });
+
+  // fit check
+  var fits = Array.prototype.slice.call(document.querySelectorAll("input[data-fit]"));
+  function fitCheck() {
+    var n = fits.filter(function (f) { return f.checked; }).length, v = document.getElementById("verdict");
+    v.className = "verdict" + (n === fits.length ? " good" : "");
+    v.textContent = n === 0 ? "Tick what is true for you." :
+      n === fits.length ? "Good fit. Go to step 1." :
+      "Not all ticked. You may still be able to claim, but read What it cannot do first and check with HMRC.";
+  }
+  fits.forEach(function (f) { f.addEventListener("change", fitCheck); });
+
+  // estimator
+  function money(n) { return "£" + Math.round(n).toLocaleString("en-GB"); }
+  function est() {
+    var m = Math.max(0, parseFloat(document.getElementById("e-miles").value) || 0);
+    var d = Math.max(0, parseFloat(document.getElementById("e-days").value) || 0);
+    var r = parseFloat(document.getElementById("e-rate").value);
+    var miles = m * d, claim = Math.min(miles, 10000) * 0.45 + Math.max(miles - 10000, 0) * 0.25;
+    document.getElementById("o-miles").textContent = Math.round(miles).toLocaleString("en-GB");
+    document.getElementById("o-claim").textContent = money(claim);
+    document.getElementById("o-refund").textContent = money(claim * r);
+  }
+  ["e-miles", "e-days", "e-rate"].forEach(function (id) {
+    document.getElementById(id).addEventListener("input", est);
+    document.getElementById(id).addEventListener("change", est);
+  });
+
+  // deadlines: 5 April, four years after the tax year ends
+  function buildDeadlines() {
+    var body = document.getElementById("deadlines"); body.innerHTML = "";
+    var now = new Date(), thisStart = now.getMonth() > 3 || (now.getMonth() === 3 && now.getDate() >= 6) ? now.getFullYear() : now.getFullYear() - 1;
+    for (var y = 2022; y <= thisStart; y++) {
+      var dl = new Date(y + 5, 3, 5), days = Math.ceil((dl - now) / 86400000), key = "f" + y;
+      var tr = document.createElement("tr");
+      var cls = days < 0 ? "pill late" : (days < 400 ? "pill soon" : "pill");
+      var txt = days < 0 ? "passed" : (days > 730 ? Math.floor(days / 365) + " years" : days + " days");
+      tr.innerHTML = '<td>' + y + "/" + String(y + 1).slice(2) + (y === thisStart ? " (in progress)" : "") + '</td><td class="when">' + dl.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) + '</td><td><span class="' + cls + '">' + txt + '</span></td><td><input type="checkbox" data-k="' + key + '" aria-label="Filed ' + y + '/' + (y + 1) + '"></td>';
+      body.appendChild(tr);
+    }
+    var added = Array.prototype.slice.call(body.querySelectorAll("input[data-k]"));
+    added.forEach(function (b) {
+      b.checked = !!state[b.getAttribute("data-k")];
+      b.addEventListener("change", function () { state[b.getAttribute("data-k")] = b.checked; save(); paint(); });
+    });
+    boxes = Array.prototype.slice.call(document.querySelectorAll("input[data-k]"));
+    paint();
+  }
+
+  // copy the starter message
+  document.getElementById("copy").addEventListener("click", function () {
+    var text = document.getElementById("prompt").textContent, note = document.getElementById("copied");
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById("prompt"));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      note.textContent = "Selected. Press Ctrl+C or Cmd+C to copy.";
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { note.textContent = "Copied."; }, fallback);
+    } else { fallback(); }
+  });
+
+  est(); fitCheck(); buildDeadlines();
+})();
+</script>
+
+</body>
+</html>
