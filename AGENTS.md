@@ -17,7 +17,7 @@ You are helping a non-technical NHS doctor (or their partner) prepare an HMRC cl
 Everything is in `tool/`:
 - `tool/run_all.sh` converts PDFs, extracts payslips and writes a draft config on the first run, then runs the checks and the calculation on the second run.
 - `tool/build_claim.py` has the steps as commands: `prepare`, `extract`, `init`, `check`, `attendance`, `calc`, `evidence`, `all`.
-- It needs `python3`, `pdftotext` (poppler) and, for the spreadsheet, `openpyxl`. `tesseract` is optional for scanned PDFs. It is built for Mac. On Windows the user needs WSL.
+- It needs `python3`, `pdftotext` (poppler) and, for the spreadsheet, `openpyxl`. `tesseract` is optional for scanned PDFs. It is built and tested on Mac only. If the user is on Windows or Linux, adapt it for them (see below) before step 1.
 Use the tool. Do not write your own PDF converter. If conversion fails on a file, log it in `issues.md` and tell the user. Do not switch method without asking.
 
 ## Steps
@@ -44,3 +44,10 @@ Step 6, the pack. Write `evidence_index.md` (already generated), `checklist.md`,
 
 ## Reusing for another person
 Each person gets their own folder copy of `my-documents/` and their own `config.yaml`. Never mix two people's files.
+
+## If the user is not on a Mac
+`tool/run_all.sh` (bash) and `tool/pdf2md.sh` (zsh) are Mac shell scripts. `tool/build_claim.py` is portable Python. Adapt the scripts for the user's system:
+- Port the two scripts to a Python or PowerShell script that does the same steps: convert each PDF to text with `pdftotext -layout` (Poppler), then run the `build_claim.py` commands in the order in `run_all.sh`.
+- Do not change the calculations in `build_claim.py`. Do not replace `pdftotext -layout` with a different PDF reader unless you compare the output on a real payslip first, because the payslip parser reads column positions.
+- On Windows, `python3` may be `python` or `py`. Paths with spaces must be quoted.
+- Ask before installing Python or Poppler. Tell the user what you changed, and check the first converted payslip with them.

@@ -11,7 +11,7 @@ If you are an NHS doctor in training who drives from home to a different hospita
 - You drive your own car from home to the hospital.
 - Your employer has never paid you mileage or "excess travel".
 - You have your payslips (the NHS ESR kind) from April 2022 onwards.
-- You use a Mac. On Windows you need WSL, which is harder.
+- You use a Mac. Windows users, see "Windows or Linux" below.
 
 ## What you need
 1. An AI app that can open a folder on your computer and run commands. Examples are the Claude desktop app with Claude Code, or ChatGPT's Codex app. A normal chat window where you only upload files will not work.
@@ -24,6 +24,14 @@ If you are an NHS doctor in training who drives from home to a different hospita
 3. **Open the unzipped folder in your AI app.** Then copy the message in `PROMPT.md` and paste it in.
 4. **Answer its questions.** It stops at checkpoints so you can check everything. Take your time.
 5. **Read your results** in `my-documents/tax-claim/`: `summary.md` (the answer), `claim_summary.xlsx` (a spreadsheet you can edit), `issues.md` (things to check), `checklist.md` (what to do next) and `sar_emails/` (emails to ask hospitals for proof of the days you worked).
+
+## Windows or Linux
+This was built and tested on a Mac only. If you use Windows or Linux, you can still use it:
+1. Download this folder as in step 1 above and open it in your AI app.
+2. Paste this message first: "This tool was built for a Mac. Read AGENTS.md and the tool folder, then adapt the scripts so they run on my computer (I use Windows). Keep the calculations in tool/build_claim.py as they are. Ask me before installing anything, and tell me what you changed."
+3. Then continue with the starter message in `PROMPT.md`.
+
+What needs adapting: `tool/run_all.sh` and `tool/pdf2md.sh` are Mac shell scripts, and the PDF reader (`pdftotext`, part of Poppler) must be installed. The calculations in `build_claim.py` are plain Python and work anywhere. Check the first converted payslip carefully, because a different PDF reader can change the layout the parser expects.
 
 ## Your privacy
 - The scripts here never send anything anywhere. They run on your computer.
